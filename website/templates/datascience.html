@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title%}
+Data Science
+{% endblock %}
+
+
+{% block header %}
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block body%}
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Data Science</h1>
+    <div class="col-lg-6 mx-auto">
+
+
+    </div>
+</div>
+
+
+<div class="container">
+
+
+<div class="row">
+    <div class="col-3">
+        <div class="position-sticky rounded-3 border shadow" style="top: 5rem;">
+            <div id="list-example" class="list-group list-group-flush rounded-3">
+                <a class="list-group-item list-group-item-action " href="#skills">Skills</a>
+                <a class="list-group-item list-group-item-action " href="#paper_recommender">Paper Recommender</a>
+                <a class="list-group-item list-group-item-action " href="#future_project">Future Project</a>
+              </div>
+        </div>
+
+    </div>
+    <div class="col-9">
+      <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+
+        <div class="container">
+            <h4 id="skills">Skills</h4>
+            <ul>
+                <li>Programming: Python, SQL</li>
+                <li>Machine Learning: pandas, scikit-learn</li>
+                <li>Data Visualization: Matplotlib, seaborn</li>
+                <li>Mathematical Computing: Mathematica</li>
+                <li>Web Development: Flask, Bootstrap</li>
+                <li>Mathematical Typesetting: LaTeX</li>
+                <li>Version Control: Git</li>
+            </ul>
+        </div>
+
+
+        <div class="container my-2 py-2">
+            <h4 id="paper_recommender">Paper Recommender</h4>
+            <p>I have created a recommendation engine for finding mathematical papers on <a href="https://arxiv.org/">arXiv.org</a>.</p>
+    
+            <p>
+                One of the challenges of mathematics research is finding relevant literature on any topic of interest.
+                While it tends to be easy to find textbooks on the general areas to what you may be studying, it can be much much more difficult to find many of the papers on a given topic.
+                Google searches and word of mouth can get you reasonably far, but this requires knowing the appropriate search terms to game the algorithm or knowing people familiar with the literature.
+                This means you are restricted by how well you can guess search terms or the 'standard papers' known to your specific community, and it is easy to overlook other authors who may be writing on closely related things.
+                Some of this is aided via mathscinet, but this has similar limitations while requiring an active academic institutional affiliation and missing preprints that have yet to be published.
+            </p>
+    
+            <p>
+                To help with this, I have written a recommendation engine where you can enter the title and abstract of a paper you are interested in (or written yourself),
+                then get recommendations of papers written on similar topics.
+                Alternatively, you can make a guess about what a title and abstract of a paper on a topic you would like to find is, to get a selection of papers on nearby topics.
+                In my experience, this tool recommends a mix of papers I had found via traditional means and interesting papers I otherwise would have missed.
+            </p>
+    
+            <p>
+                I have compiled the metadata all of the arXiv's math papers into a dataframe and generated two tf-idf vectorizers based on the titles and abstracts of the papers, respectively.
+                Using these, I compare the user-provided sample title and abstract to all of those in the dataframe to generate a list of the ten most similar papers.
+                Thank you to arXiv for use of its open access interoperability.</p>
+
+            <a href="/projects/recommend" type="button" class="btn btn-lg btn-primary">Paper Recommender</a>
+        </div>
+        
+        <div class="container my-2 py-2">
+            <h4 id="future_project">Future Project</h4>
+            <p>TBA</p>
+            
+        </div>
+
+        
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+{% endblock%}

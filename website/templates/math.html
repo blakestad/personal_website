@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}
+
+
+{% block title%}
+Math
+{% endblock %}
+
+
+{% block header %}
+
+
+
+{% endblock %}
+
+
+
+
+{% block body%}
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Mathematics</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">I recieved my PhD in mathematics at the University of Colorado Boulder under David Grant.</p>
+
+        <p class="lead mb-4">
+          My mathematical interests are in arithmetic geometry.
+          More specifically, I study elliptic curves, genus-two curves, abelian surfaces, curves of higher genus, higher-dimensional abelian varieties, p-adic numbers, theta functions, and modular forms.
+  
+        </p>
+
+        <a href="#papers" type="button" class="btn btn-lg btn-primary">Papers</a>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">p-Adic Numbers</h1>
+        <p class="lead">
+            For each prime integer p, there is a whole set of numbers, alternative to the real numbers, which are well-suited to a version of calculus that somehow still remembers discrete properties around p.
+        </p>
+      </div>
+      <div class="col-lg-4 pb-5">
+          <img class="rounded-lg-3 img-fluid" src="/static/images/p-adic.png" alt="p-adic picture" width="400">
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Elliptic Curves</h1>
+        <p class="lead">Elliptic curves are geometric objects with profound connections to many areas of mathematics.</p>
+      </div>
+      <div class="col-lg-4 pb-5">
+          <img class="rounded-lg-3 img-fluid" src="/static/images/elliptic-curve.png" alt="elliptic curve picture" width="720">
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Modular Forms</h1>
+        <p class="lead">
+            Modular forms are a certain class of geometric function.
+            As complex functions, they encode classifying information about elliptic curves.
+            At the same time, their power series coefficients exibit deep patterns in the integers.
+        </p>
+      </div>
+      <div class="col-lg-4 pb-5">
+          <img class="rounded-lg-3 img-fluid" src="/static/images/modular-form.png" alt="modular form picture" width="720">
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Higher Genus Curves</h1>
+        <p class="lead">
+            Elliptic curves are just the start of the theory of algebraic curves, being the curves of genus one.
+            Their higher-genus cousins form a furtile playground in which to enrich our understanding of everything we know from elliptic curves.
+        </p>
+      </div>
+      <div class="col-lg-4 pb-5">
+          <img class="rounded-lg-3 img-fluid" src="/static/images/hyperelliptic.png" alt="hyperelliptic curve picture" width="720">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Abelian Varieties</h1>
+        <p class="lead">
+            Abelian varieties are yet another way to extend the essence of elliptic curves, but as geometric spaces of higher dimension.
+        </p>
+      </div>
+      <div class="col-lg-4 pb-5">
+          <img class="rounded-lg-3 img-fluid" src="/static/images/torus.png" alt="torus picture" width="720">
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Theta Functions</h1>
+        <p class="lead">
+            Theta functions are a class of geometric function that encode some of both the modular information of modular forms and the geometric information of abelian varieties.
+        </p>
+      </div>
+      <div class="col-lg-4 pb-5">
+          <img class="rounded-lg-3 img-fluid" src="/static/images/theta_function.jpg" alt="theta function picture" width="720">
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="container px-4 py-5 my-5 text-center" id="papers">
+    <h1>Papers</h1>
+    <p>
+        A collection of my papers are listed below:
+    </p>
+    
+    <table class="table table-striped">
+        <thead>
+          <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Coauthors</th>
+              <th scope="col">Link</th>
+          </tr>
+        </thead>
+        <tr>
+            <td>
+                Twisted Kronecker theta functions and p-adic interpolation
+            </td>
+            <td> Y. Choie </td>
+            <td>In preparation</td>
+        </tr>
+          <tr>
+              <td>
+                Twisted Kronecker series and periods of modular forms on $\Gamma_0(\mathbb{N})$
+              </td>
+              <td> Y. Choie </td>
+              <td>Submitted</td>
+          </tr>
+          <tr>
+            <td>
+                Universal p-adic sigma and Weierstrass zeta functions
+            </td>
+            <td> D. Grant </td>
+            <td><a href="https://www.sciencedirect.com/science/article/abs/pii/S0022314X23000380">Journal</a>
+                <a href="https://arxiv.org/abs/1903.02480">arXiv</a></td>
+        </tr>
+        <tr>
+            <td>
+                Perfectoid covers of abelian varieties
+            </td>
+            <td> D. Gvirtz, B. Heuer, D. Shchedrina, K. Shimizu, P. Wear, Z. Yao </td>
+            <td><a href="https://www.intlpress.com/site/pub/pages/journals/items/mrl/content/vols/0029/0003/a002/">Journal</a>
+                <a href="https://arxiv.org/abs/1804.04455">arXiv</a></td>
+        </tr>
+        <tr>
+            <td>
+                Constants in Titchmarsh divisor problems for elliptic curves
+            </td>
+            <td> R. Bell, A.C. Cojocaru, A. Cowan, N. Jones, V. Matei, G. Smith, I. Vogt </td>
+            <td><a href="https://link.springer.com/article/10.1007/s40993-019-0175-9">Journal</a>
+                <a href="https://arxiv.org/abs/1706.03422">arXiv</a></td>
+        </tr>
+        <tr>
+            <td>
+                On Generalizations of p-Adic Weierstrass Sigma and Zeta Functions
+            </td>
+            <td> self </td>
+            <td><a href="https://scholar.colorado.edu/concern/graduate_thesis_or_dissertations/dv13zt241">Thesis</a></td>
+        </tr>
+      </table>
+</div>
+
+
+
+
+{% endblock%}
