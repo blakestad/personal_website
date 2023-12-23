@@ -1,10 +1,8 @@
-# Things flask tutorial recommended ignoring:
 .venv/
-
 *.pyc
-
 .pytest_cache/
-
+.vscode/
+example_math.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

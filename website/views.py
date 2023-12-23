@@ -18,8 +18,8 @@ def recommend():
         payload = {'input_title': input_title, 'input_abstract': input_abstract}
 
         # The URL of Google Cloud Run service that runs the recommendation backend
-        recommendation_service_url = 'http://127.0.0.1:5000'
-        #recommendation_service_url = 'https://your-cloud-run-backend-url/recommend'
+        #recommendation_service_url = 'http://127.0.0.1:8080'
+        recommendation_service_url = 'https://arxiv-recommender-got5udenaq-uc.a.run.app'
 
         # Make the POST request
         response = requests.post(recommendation_service_url, json=payload)
@@ -30,6 +30,10 @@ def recommend():
         else:
             return 'Failed to get recommendations', 500
     return render_template('recommend.html')
+
+@views.route('/projects/blog/arxiv')
+def recommend_blog():
+    return render_template('arxiv_blog.html')
 
 @views.route('/math')
 def math():
