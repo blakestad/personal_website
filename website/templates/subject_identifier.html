@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title%}
+Subject Identifier
+{% endblock %}
+
+
+
+{% block header %}
+
+
+{% endblock %}
+
+
+
+
+
+
+{% block body%}
+
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Subject Identifier</h1>
+    <div class="col-lg-6 mx-auto">
+
+
+    </div>
+</div>
+
+
+
+
+
+
+<div class="container">
+
+
+
+This is a tool which identifies which mathematical subjects a given article is.
+Fill in the title and/or abstract fields below to match a paper of interest, then after submission,
+you will get a list of recommended subjects that paper belongs to.
+(Note that it can take a up to a minute to start up the recommender service if it hasn't been used recently.)
+
+
+<br><br>
+
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+      </div>
+      <div class="mb-3">
+        <label for="abstract" class="form-label">Abstract</label>
+        <textarea class="form-control" id="abstract" name="abstract" rows="3" placeholder="Abstract"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br>
+<p>Thank you to arXiv for use of its open access interoperability.</p>
+
+</div>
+
+
+
+{% block output %}
+{% endblock %}
+
+{% endblock%}

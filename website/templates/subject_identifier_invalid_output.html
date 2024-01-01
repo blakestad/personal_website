@@ -1,0 +1,79 @@
+{% extends "subject_identifier.html" %}
+
+{% block head %}
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}
+
+
+
+
+
+
+{% block body %}
+
+<div class="px-4 py-5 my-5 mb-3 text-center">
+  <h1 class="display-5 fw-bold text-body-emphasis">Subject Identifier</h1>
+  <div class="col-lg-6 mx-auto">
+
+
+  </div>
+</div>
+
+
+
+<div class="container">
+
+
+  <form method="POST">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ title }}">
+      </div>
+      <div class="mb-3">
+        <label for="abstract" class="form-label">Abstract</label>
+        <textarea class="form-control" id="abstract" name="abstract" rows="3">{{ abstract }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  
+</div>
+
+<div class="container my-4 py-4">
+  
+
+  
+  <h3>Subject classifications:</h3>
+  <br>
+  <p>No subjects were identified. The three most likely candidates are (the threshold was 0.25):</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+          <th scope="col">Subjects</th>
+          <th scope="col">Estimated Probability</th>
+      </tr>
+    </thead>
+      {% for index, row in results.iterrows() %}
+      <tr>
+          <td>{{ row['category_name'] }}</td>
+          <td>{{ row['prob'] }}</td>
+      </tr>
+      {% endfor %}
+  </table>
+  
+
+</div>
+
+
+
+{% endblock%}

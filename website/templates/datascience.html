@@ -35,7 +35,9 @@ Data Science
             <div id="list-example" class="list-group list-group-flush rounded-3">
                 <a class="list-group-item list-group-item-action " href="#skills">Skills</a>
                 <a class="list-group-item list-group-item-action " href="#paper_recommender">Paper Recommender</a>
+                <a class="list-group-item list-group-item-action " href="#subject_identifier">Subject Identifier</a>
                 <a class="list-group-item list-group-item-action " href="#future_project">Future Project</a>
+                <a class="list-group-item list-group-item-action " href="#blog">ArXiv data blog</a>
               </div>
         </div>
 
@@ -85,8 +87,23 @@ Data Science
         </div>
         
         <div class="container my-2 py-2">
-            <h4 id="future_project">Future Project</h4>
-            <p>TBA</p>
+            <h4 id="subject_identifier">Subject Identifier</h4>
+            <p>I have created a classifier for finding identifying the subject of a mathematical paper.</p>
+    
+            <p>
+                I have compiled the metadata all of the arXiv's math papers into a dataframe and generated two tf-idf vectorizers based on the titles and abstracts of the papers, respectively.
+                Using these, I compare the user-provided sample title and abstract to all of those in the dataframe to generate a list of the ten most similar papers.
+                Thank you to arXiv for use of its open access interoperability.</p>
+
+            <a href="/projects/subject-identifier" type="button" class="btn btn-lg btn-primary">Subject Identifier</a>
+
+            
+        </div>
+
+
+        <div class="container my-2 py-2">
+            <h4 id="blog">ArXiv data blog</h4>
+            <p>Here is a <a href="/blog/arxiv">blog post</a> about my process working through the ArXiv metadata.</p>
             
         </div>
 

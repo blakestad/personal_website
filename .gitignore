@@ -3,6 +3,7 @@
 .pytest_cache/
 .vscode/
 example_math.py
+*code-workspace
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
