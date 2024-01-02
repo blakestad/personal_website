@@ -41,8 +41,8 @@ def identify_subject():
         payload = {'input_title': input_title, 'input_abstract': input_abstract}
 
         # The URL of Google Cloud Run service that runs the identification backend
-        identification_service_url = 'http://127.0.0.1:8080'
-        #identification_service_url = '????'
+        #identification_service_url = 'http://127.0.0.1:8080'
+        identification_service_url = 'https://arxiv-subject-identifier-got5udenaq-uc.a.run.app'
 
         # Make the POST request
         response = requests.post(identification_service_url, json=payload)
