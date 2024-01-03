@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, send_file
 import requests
 import pandas as pd
 
@@ -64,10 +64,18 @@ def identify_subject():
 def arxiv_blog():
     return render_template('arxiv_blog.html')
 
+@views.route('/data-science/resume')
+def resume():
+    return send_file('static/pdfs/blakestad_resume_20240103.pdf', download_name='blakestad_resume.pdf')
+
 @views.route('/math')
 def math():
     return render_template('math.html')
 
-@views.route('/data_science')
+@views.route('/data-science')
 def data_science():
     return render_template('datascience.html')
+
+@views.route('/sitemap.xml')
+def sitemap():
+    return send_file('static/sitemap/sitemap.xml', download_name='sitemap.xml')
