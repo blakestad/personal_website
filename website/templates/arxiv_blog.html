@@ -10,300 +10,299 @@ ArXiv data
     <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">ArXiv data and paper recommender</h1>
     <p>
         This is a description of the process of putting together my arXiv math paper recommender.
-        The service itself can be found <a href="/projects/recommend">here</a>.
     </p>
 </div>
 
-<div class="px-4 py-5 my-5">   
-    <p>
-        The <a href="arxiv.org">arXiv</a> is a repository of technical papers in quantitative sciences and mathematics maintained by Cornell University.
-        It is common practice for an author to upload a version of their paper to the arXiv around the same time that submit their paper for publication in a journal.
 
-    </p>
 
-    <p>
-        While searching Kaggle for interesting datasets, I came across the <a href="https://www.kaggle.com/datasets/Cornell-University/arxiv/">arXiv metadata</a> dataset, which is maintained by the arXiv.
-        This dataset contains metadata on all arXiv papers (updated weekly).
-        Since I have a background in academia, this seemed like a natural place to look for some interesting trends.
-    </p>
-    <h2>Making sense of the dataset</h2>
-    <p>
-        The data itself was in a ~3.5 gigabyte json file.
-        That was a large enough file size that it had to be read into pandas block by block.
-        To start, I loaded the first million rows into a pandas dataframe.
-        
-    </p>
-    <p>
-        The first thing I wanted to do was to get a sense of the distribution of papers by subject.
-        That required understanding the specific format of the data as well as how subjects are organized by the arXiv in general.
-        It turns out that the metadata included in the file had the specific category-code tags associated to each paper, but not the proper category names, nor the general subjects.
-        So if a paper was an algebraic geometry paper, it would have the 'math.AG' tag in the metadata, but not 'algebraic geometry' nor 'mathematics' (while this tag seems easy enough to read the subject from, not all tags are of this shape).
-    </p>
-    <p>
-        There are eight subjects covered by the arXiv [with the associated code in brackets]: computer science [cs], economics [econ], electrical engineering and systems science [eess], mathematics [math], physics, quantitative biology [q-bio], quantitative finance [q-fin], and statistics [stat]
-        (physics lacks a code, as it is divided into many subsubjects).
-        At first glance, there is a table of all topic categories on the <a href="https://arxiv.org/category_taxonomy">ArXiv Category Taxonomy</a> page.
-        It contains 155 categories, split among 40 cs categories, 3 econ categories, 4 eess categories, 32 math categories, 51 physics categories within 13 sub-subjects, 10 q-bio categories, 9 q-fin categories, and 6 stat categories.
-    </p>
-    <p>
-        To even begin the task of tagging articles with the appropriate subjects, I needed to turn the information on the arXiv taxonomy page into a python dictionary.
-        I needed to pull all the information from the 155 categories off the webpage.
-        The taxonomy page is formatted as an accordion of tables.
-    </p>
-    <img src="/static/images/arxiv_taxonomy.png">
-    <p>
-        I used the BeautifulSoup package for python to pull the data off of the website.
-    </p>
-    <div class="container mt-5">
-        <pre class="bg-light p-4 border rounded"><code>
-            import requests
-            from bs4 import BeautifulSoup
-            
-            #import arxiv categories page url into BeautifulSoup
-            url = "https://arxiv.org/category_taxonomy"
-            page = requests.get(url)
-            soup = BeautifulSoup(page.content,'html.parser')
-            
-            #restrict to the categories table in the page
-            tax_list_tag = soup.find(id='category_taxonomy_list')
-            
-            #get list whose elements contain each of the main subject categories
-            cat_tax_list = tax_list_tag.find_all(attrs={'class':'accordion-body'})
-        </code></pre>
+<div class="container">
+    <div class="row">
+
+        <div class="col-3">
+            <div class="position-sticky rounded-3 border shadow" style="top: 5rem;">
+                <div id="list-example" class="list-group list-group-flush rounded-3">
+                    <a class="list-group-item list-group-item-action " href="#the-dataset">The dataset</a>
+                    <a class="list-group-item list-group-item-action " href="#making-sense-of-data">Making sense of the dataset</a>
+                    <a class="list-group-item list-group-item-action " href="#data-cleanup">Data cleanup</a>
+                    <a class="list-group-item list-group-item-action " href="#exploratory-analysis">Exploratory analysis</a>
+                    <a class="list-group-item list-group-item-action " href="#mathematics-papers">Mathematics papers</a>
+                  </div>
+            </div>
+        </div>
+
+
+        <div class="col-9">
+            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+     
+                <div class="container my-2 py-2" id="the-dataset">
+                    <h2>The dataset</h2>
+                    <p>
+                        The <a href="arxiv.org">arXiv</a> is a repository of technical papers in quantitative sciences and mathematics maintained by Cornell University.
+                        It is common practice for an author to upload a version of their paper to the arXiv around the same time that submit their paper for publication in a journal.
+                    </p>
+                    <p>
+                        While searching Kaggle for interesting datasets, I came across the <a href="https://www.kaggle.com/datasets/Cornell-University/arxiv/">arXiv metadata</a> dataset, which is maintained by the arXiv.
+                        This dataset contains metadata on all arXiv papers (updated weekly).
+                        Since I have a background in academia, this seemed like a natural place to look for some interesting trends.
+                    </p>
+                </div>
+                <div class="container my-2 py-2" id="making-sense-of-data">
+                    <h3>Making sense of the dataset</h3>
+                    <p>
+                        The data itself was in a ~3.5 gigabyte json file.
+                        That was a large enough file size that it had to be read into pandas block by block.
+                        To start, I loaded the first million rows into a pandas dataframe.
+                        
+                    </p>
+                    <p>
+                        The first thing I wanted to do was to get a sense of the distribution of papers by subject.
+                        That required understanding the specific format of the data as well as how subjects are organized by the arXiv in general.
+                        It turns out that the metadata included in the file had the specific category-code tags associated to each paper, but not the proper category names, nor the general subjects.
+                        So if a paper was an algebraic geometry paper, it would have the 'math.AG' tag in the metadata, but not 'algebraic geometry' nor 'mathematics' (while this tag seems easy enough to read the subject from, not all tags are of this shape).
+                    </p>
+                    <p>
+                        There are eight subjects covered by the arXiv [with the associated code in brackets]: computer science [cs], economics [econ], electrical engineering and systems science [eess], mathematics [math], physics, quantitative biology [q-bio], quantitative finance [q-fin], and statistics [stat]
+                        (physics lacks a code, as it is divided into many subsubjects).
+                        At first glance, there is a table of all topic categories on the <a href="https://arxiv.org/category_taxonomy">ArXiv Category Taxonomy</a> page.
+                        It contains 155 categories, split among 40 cs categories, 3 econ categories, 4 eess categories, 32 math categories, 51 physics categories within 13 sub-subjects, 10 q-bio categories, 9 q-fin categories, and 6 stat categories.
+                    </p>
+                    <p>
+                        To even begin the task of tagging articles with the appropriate subjects, I needed to turn the information on the arXiv taxonomy page into a python dictionary.
+                        I needed to pull all the information from the 155 categories off the webpage.
+                        The taxonomy page is formatted as an accordion of tables.
+                    </p>
+                    <img src="/static/images/arxiv_taxonomy.png" alt="Collapsed accordian table from arXiv taxonomy page" title="Collapsed accordian table">
+                    <p>
+                        I used the BeautifulSoup package for python to pull the data off of the website.
+                    </p>
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+                            import requests
+                            from bs4 import BeautifulSoup
+                            
+                            #import arxiv categories page url into BeautifulSoup
+                            url = "https://arxiv.org/category_taxonomy"
+                            page = requests.get(url)
+                            soup = BeautifulSoup(page.content,'html.parser')
+                            
+                            #restrict to the categories table in the page
+                            tax_list_tag = soup.find(id='category_taxonomy_list')
+                            
+                            #get list whose elements contain each of the main subject categories
+                            cat_tax_list = tax_list_tag.find_all(attrs={'class':'accordion-body'})
+                        </code></pre>
+                    </div>
+                    <p>
+                        All the categories of a particular subject, except for physics, are in a table with two columns, the first being the arxiv category code code (with name in parethesis), and the second being a description. 
+                    </p>
+                    <img src="/static/images/arxiv_page_sample.png" alt="First entries of Computer Science table" title="First rows of CS table">
+                    <p>
+                        I used BeautifulSoup to pull the data from each table and into a pandas dataframe and used pandas to move the category names into a separate column from the arXiv code.
+                    </p>
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+                            import pandas as pd
+
+                            #restrict to the computer science categories
+                            comp_sci_tag_list = cat_tax_list[0].find_all(attrs={'class':"columns divided"})
+                            
+                            #extract computer science categories into a list whose elements are dictionaries with the arxiv id, category name, and description
+                            tagged_comp_sci_list = []
+                            for entry in comp_sci_tag_list:
+                                row = {'arxiv_id':entry.find('h4').text,
+                                    'category_name':entry.find('span').text,
+                                    'description':entry.find("p").text}
+                                tagged_comp_sci_list.append(row)
+                            
+                            #compile the computer science categories into a DataFrame.
+                            comp_sci_categories = pd.DataFrame(tagged_comp_sci_list)
+
+                            #strip extra formatting out of computer science categories
+                            for index, row in comp_sci_categories.iterrows():
+                                comp_sci_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
+                                comp_sci_categories['category_name'][index] = row['category_name'].strip('()')
+                        </code></pre>
+                    </div>
+                    <p>
+                        The physics section is a table with three columns, one for the primary category, one with the sub-category, and one with a description.
+                    </p>
+                    <img src="/static/images/arxiv_physics_sample.png" alt="Some rows of physics table" title="Some rows of physics table">
+                    <p>
+                        Again I used BeautifulSoup to extract a dataframe, but now with both primary category and sub-category information.
+                    </p>
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+                            #restrict to the physics categories
+                            phys_sup_tag_list = cat_tax_list[4].find_all(attrs={'class':"physics columns"})
+                            
+                            #extract physics categories into a list whose elements are dictionaries with the arxiv id, category name, and description
+                            tagged_phys_list = []
+                            for cat in phys_sup_tag_list: 
+                                phys_tag_list = cat.find_all(attrs={'class':"columns divided"})
+                                for entry in phys_tag_list:
+                                    row = {'super_category_name':cat.find('h3').text,
+                                        'super_category_id':cat.find('span').text,
+                                        'arxiv_id':entry.find('h4').text,
+                                        'category_name':entry.find('span').text,
+                                        'description':entry.find("p").text}
+                                    tagged_phys_list.append(row)
+                            
+                            #compile the physics categories into a DataFrame.
+                            phys_categories = pd.DataFrame(tagged_phys_list)
+
+                            #strip extra formatting out of physics categories
+                            for index, row in phys_categories.iterrows():
+                                phys_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
+                                phys_categories['category_name'][index] = row['category_name'].strip('()')
+                                phys_categories['super_category_name'][index] = row['super_category_name'].replace(row['super_category_id'],"").strip()
+                                phys_categories['super_category_id'][index] = row['super_category_id'].strip('()')
+                        </code></pre>
+                    </div>
+                </div>
+
+                <div class="container my-2 py-2" id="data-cleanup">
+                    <h3>Data cleanup</h3>
+                    <p>
+                        Once these dataframes were neatly put together, I could start to add subject information to the arXiv metadata.
+                        I read off the first million entries of the json file into a dataframe and wrote a script to add a column with the subjects based on the category tags.
+                        There were a few complications.
+                        First, there are often multiple category codes for a given article, so each code needs to be read out of a string and handled separately.
+                        Second, different category codes correspond to a single subject (for example, the astrophysics of galaxies category and the nuclear experiment category are both physics).
+                        Third, there are 6 equivalent categories in different subjects (mathematical physics is both a math and a physics category with a math code of math.MP and a physics code of math-ph).
+                        Fourth, there are 20 depreciated category tags not listed on the arXiv taxonomy page at all.
+                    </p>
+                    <p>
+                        For the first problem, I wrote a script turning the comma-separated string of category codes into a list.
+                    </p>
+                    <p>
+                        When writing the code to generate the subject information for each paper, the second problem was dealt with by storing the subjects in a python set.
+                        Each category code in the list generated in the step above would be converted to the corresponding subject by the dictionaries produced earlier.
+                        By storing the results in a set, only a single copy of the distinct subjects would remain.
+                    </p>
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+                            #Turn list of arxiv_id category codes to set of subjects
+                            def ParsedCatToSubject(catlist):
+                                SubjectList = [IdToSubject(cat) for cat in catlist]
+                                SubjectSet = set(SubjectList)
+                                return SubjectSet            
+
+                            #Output general subject given a category arxiv_id
+                            def IdToSubject(a_id):
+                                if a_id in comp_sci_categories.arxiv_id.unique():
+                                    return "Computer Science"
+                                elif a_id in econ_categories.arxiv_id.unique():
+                                    return "Economics"
+                                elif a_id in eess_categories.arxiv_id.unique():
+                                    return "Electrical Engineering and Systems Science"
+                                elif a_id in math_categories.arxiv_id.unique():
+                                    return "Mathematics"
+                                elif a_id in phys_categories.arxiv_id.unique():
+                                    return "Physics"
+                                elif a_id in phys_categories.super_category_id.unique():
+                                    return "Physics"
+                                elif a_id in qbio_categories.arxiv_id.unique():
+                                    return "Quantitative Biology"
+                                elif a_id in qfin_categories.arxiv_id.unique():
+                                    return "Quantitative Finance"
+                                elif a_id in stat_categories.arxiv_id.unique():
+                                    return "Statistics"
+                                elif a_id in extra_category_to_subject.keys():
+                                    return extra_category_to_subject[a_id]
+                                else:
+                                    return "unknown"
+                        </code></pre>
+                    </div>
+                    <p>
+                        Since some papers would only be tagged with one of the equivalent category codes, the third problem was solved by checking each paper for either entry in all of the category code pairs, appending the missing code if only one was present.
+                        This was also a good opportunity to add in the updated versions of any depreciated category codes each paper may have been tagged with.
+                    </p>
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+                            #Turn string of arxiv_id categories into a list of arxiv_id category codes together with aliases
+                            def ParseCategories(stringlist):
+                            catlist = stringlist.split()
+                            for key, value in CATEGORY_ALIASES.items():
+                                if (key in catlist) and (not value in catlist):
+                                    catlist.append(value)
+                                elif (value in catlist) and (not key in catlist):
+                                    catlist.append(key)
+                            for key, value in EXTRA_ALIASES.items():
+                                if (key in catlist) and (not value in catlist):
+                                    catlist.append(value)
+                                    #catlist.remove(key)
+                            return catlist
+                        </code></pre>
+                    </div>
+                    <p>
+                        The fourth problem was the most unanticipated.
+                        After having a script that took into acount the three other issues, there were many papers that were still failing to get classified.
+                        I added in a new classification "unknown" for any category tag which did not get classified by the existing script.
+                        Then I would run the classification script, subset the dataframe to those papers with an 'unknown' subject, and look at the first paper.
+                        From there I could find an offending category code and go onto the paper's arXiv webpage to see what modern category code the old code had been replaced by.
+                        Each time I found a new code, I added it to a dictionary of depreciated codes and their updated versions for future reference, as well as a dictionary with the current subject.
+                        After each update, I reran the script and the collection of 'unknown' papers got smaller, until eventually I had found all 20 codes and there were no remaining 'unknown' subjects.
+                        
+                    </p>
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+                            EXTRA_ALIASES = {
+                                'adap-org':'nlin.AO',
+                                'solve-int':'nlin.SI',
+                                'solv-int':'nlin.SI',
+                                'alg-geom':'math.AG',
+                                'chao-dyn':'nlin.CD',
+                                'funct-an':'math.FA',
+                                'dg-ga':'math.DG',
+                                'q-alg':'math.QA',
+                                'adap-org':'nlin.AO',
+                                'atom-ph':'physics.atom-ph',
+                                'chao-dyn':'nlin.CD',
+                                'chem-ph':'physics.chem-ph',
+                                'patt-sol':'nlin.PS',
+                                'comp-gas':'nlin.CG',
+                                'acc-phys':'physics.acc-ph',
+                                'ao-sci':'physics.ao-ph',
+                                'plasm-ph':'physics.plasm-ph',
+                                'mtrl-th':'cond-mat.mtrl-sci',
+                                'cmp-lg':'cs.CL',
+                                'supr-con':'cond-mat.supr-con'
+                            }
+                        </code></pre>
+                    </div>
+                </div>
+
+                <div class="container my-2 py-2" id="exploratory-analysis">
+                    <h3>Exploratory analysis</h3>
+                    <p>
+                        Having dealt with those issues, I tagged each of the papers with their relevant subjects.
+                        Using matplotlib, I was able to plot the following distribution.
+                    </p>
+                    <img src="/static/images/arxiv_papers_by_subject.png" alt="A graph of number of papers by subject" title="Papers by subject">
+                    <p>
+                        It was clear that physics was the most popular subject, with more than half of the papers.
+                        Econ, not so much; note that there were 1043 econ papers, not 0 like one might assume by looking at the graph.
+                    </p>
+                </div>
+
+                <div class="container my-2 py-2" id="mathematics-papers">
+                    <h2>Mathematics papers</h2>
+                    <p>
+                        I decided that I wanted to restrict the dataset to mathematics papers.
+                        This was a part of the data I am inherently more familiar with.
+                        It also a large decrease in the amount of data to wrangle.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>
-        All the categories of a particular subject, except for physics, are in a table with two columns, the first being the arxiv category code code (with name in parethesis), and the second being a description. 
-    </p>
-    <img src="/static/images/arxiv_page_sample.png">
-    <p>
-        I used BeautifulSoup to pull the data from each table and into a pandas dataframe and used pandas to move the category names into a separate column from the arXiv code.
-    </p>
-    <div class="container mt-5">
-        <pre class="bg-light p-4 border rounded"><code>
-            import pandas as pd
-
-            #restrict to the computer science categories
-            comp_sci_tag_list = cat_tax_list[0].find_all(attrs={'class':"columns divided"})
-            
-            #extract computer science categories into a list whose elements are dictionaries with the arxiv id, category name, and description
-            tagged_comp_sci_list = []
-            for entry in comp_sci_tag_list:
-                row = {'arxiv_id':entry.find('h4').text,
-                      'category_name':entry.find('span').text,
-                      'description':entry.find("p").text}
-                tagged_comp_sci_list.append(row)
-            
-            #compile the computer science categories into a DataFrame.
-            comp_sci_categories = pd.DataFrame(tagged_comp_sci_list)
-
-            #strip extra formatting out of computer science categories
-            for index, row in comp_sci_categories.iterrows():
-                comp_sci_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
-                comp_sci_categories['category_name'][index] = row['category_name'].strip('()')
-        </code></pre>
-    </div>
-    <p>
-        The physics section is a table with three columns, one for the primary category, one with the sub-category, and one with a description.
-    </p>
-    <img src="/static/images/arxiv_physics_sample.png">
-    <p>
-        Again I used BeautifulSoup to extract a dataframe, but now with both primary category and sub-category information.
-    </p>
-    <div class="container mt-5">
-        <pre class="bg-light p-4 border rounded"><code>
-            #restrict to the physics categories
-            phys_sup_tag_list = cat_tax_list[4].find_all(attrs={'class':"physics columns"})
-            
-            #extract physics categories into a list whose elements are dictionaries with the arxiv id, category name, and description
-            tagged_phys_list = []
-            for cat in phys_sup_tag_list: 
-                phys_tag_list = cat.find_all(attrs={'class':"columns divided"})
-                for entry in phys_tag_list:
-                    row = {'super_category_name':cat.find('h3').text,
-                           'super_category_id':cat.find('span').text,
-                           'arxiv_id':entry.find('h4').text,
-                         'category_name':entry.find('span').text,
-                         'description':entry.find("p").text}
-                    tagged_phys_list.append(row)
-            
-            #compile the physics categories into a DataFrame.
-            phys_categories = pd.DataFrame(tagged_phys_list)
-
-            #strip extra formatting out of physics categories
-            for index, row in phys_categories.iterrows():
-                phys_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
-                phys_categories['category_name'][index] = row['category_name'].strip('()')
-                phys_categories['super_category_name'][index] = row['super_category_name'].replace(row['super_category_id'],"").strip()
-                phys_categories['super_category_id'][index] = row['super_category_id'].strip('()')
-        </code></pre>
-    </div>
-
-    <h3>Data cleanup</h3>
-    <p>
-        Once these dataframes were neatly put together, I could start to add subject information to the arXiv metadata.
-        I read off the first million entries of the json file into a dataframe and wrote a script to add a column with the subjects based on the category tags.
-        There were a few complications.
-        First, there are often multiple category codes for a given article, so each code needs to be read out of a string and handled separately.
-        Second, different category codes correspond to a single subject (for example, the astrophysics of galaxies category and the nuclear experiment category are both physics).
-        Third, there are 6 equivalent categories in different subjects (mathematical physics is both a math and a physics category with a math code of math.MP and a physics code of math-ph).
-        Fourth, there are 20 depreciated category tags not listed on the arXiv taxonomy page at all.
-    </p>
-    <p>
-        For the first problem, I wrote a script turning the comma-separated string of category codes into a list.
-    </p>
-    <p>
-        When writing the code to generate the subject information for each paper, the second problem was dealt with by storing the subjects in a python set.
-        Each category code in the list generated in the step above would be converted to the corresponding subject by the dictionaries produced earlier.
-        By storing the results in a set, only a single copy of the distinct subjects would remain.
-    </p>
-    <div class="container mt-5">
-        <pre class="bg-light p-4 border rounded"><code>
-            #Turn list of arxiv_id category codes to set of subjects
-            def ParsedCatToSubject(catlist):
-                SubjectList = [IdToSubject(cat) for cat in catlist]
-                SubjectSet = set(SubjectList)
-                return SubjectSet            
-
-            #Output general subject given a category arxiv_id
-            def IdToSubject(a_id):
-                if a_id in comp_sci_categories.arxiv_id.unique():
-                    return "Computer Science"
-                elif a_id in econ_categories.arxiv_id.unique():
-                    return "Economics"
-                elif a_id in eess_categories.arxiv_id.unique():
-                    return "Electrical Engineering and Systems Science"
-                elif a_id in math_categories.arxiv_id.unique():
-                    return "Mathematics"
-                elif a_id in phys_categories.arxiv_id.unique():
-                    return "Physics"
-                elif a_id in phys_categories.super_category_id.unique():
-                    return "Physics"
-                elif a_id in qbio_categories.arxiv_id.unique():
-                    return "Quantitative Biology"
-                elif a_id in qfin_categories.arxiv_id.unique():
-                    return "Quantitative Finance"
-                elif a_id in stat_categories.arxiv_id.unique():
-                    return "Statistics"
-                elif a_id in extra_category_to_subject.keys():
-                    return extra_category_to_subject[a_id]
-                else:
-                    return "unknown"
-        </code></pre>
-    </div>
-    <p>
-        Since some papers would only be tagged with one of the equivalent category codes, the third problem was solved by checking each paper for either entry in all of the category code pairs, appending the missing code if only one was present.
-        This was also a good opportunity to add in the updated versions of any depreciated category codes each paper may have been tagged with.
-    </p>
-    <div class="container mt-5">
-        <pre class="bg-light p-4 border rounded"><code>
-            #Turn string of arxiv_id categories into a list of arxiv_id category codes together with aliases
-            def ParseCategories(stringlist):
-            catlist = stringlist.split()
-            for key, value in CATEGORY_ALIASES.items():
-                if (key in catlist) and (not value in catlist):
-                    catlist.append(value)
-                elif (value in catlist) and (not key in catlist):
-                    catlist.append(key)
-            for key, value in EXTRA_ALIASES.items():
-                if (key in catlist) and (not value in catlist):
-                    catlist.append(value)
-                    #catlist.remove(key)
-            return catlist
-        </code></pre>
-    </div>
-    <p>
-        The fourth problem was the most unanticipated.
-        After having a script that took into acount the three other issues, there were many papers that were still failing to get classified.
-        I added in a new classification "unknown" for any category tag which did not get classified by the existing script.
-        Then I would run the classification script, subset the dataframe to those papers with an 'unknown' subject, and look at the first paper.
-        From there I could find an offending category code and go onto the paper's arXiv webpage to see what modern category code the old code had been replaced by.
-        Each time I found a new code, I added it to a dictionary of depreciated codes and their updated versions for future reference, as well as a dictionary with the current subject.
-        After each update, I reran the script and the collection of 'unknown' papers got smaller, until eventually I had found all 20 codes and there were no remaining 'unknown' subjects.
-         
-    </p>
-    <div class="container mt-5">
-        <pre class="bg-light p-4 border rounded"><code>
-            EXTRA_ALIASES = {
-                'adap-org':'nlin.AO',
-                'solve-int':'nlin.SI',
-                'solv-int':'nlin.SI',
-                'alg-geom':'math.AG',
-                'chao-dyn':'nlin.CD',
-                'funct-an':'math.FA',
-                'dg-ga':'math.DG',
-                'q-alg':'math.QA',
-                'adap-org':'nlin.AO',
-                'atom-ph':'physics.atom-ph',
-                'chao-dyn':'nlin.CD',
-                'chem-ph':'physics.chem-ph',
-                'patt-sol':'nlin.PS',
-                'comp-gas':'nlin.CG',
-                'acc-phys':'physics.acc-ph',
-                'ao-sci':'physics.ao-ph',
-                'plasm-ph':'physics.plasm-ph',
-                'mtrl-th':'cond-mat.mtrl-sci',
-                'cmp-lg':'cs.CL',
-                'supr-con':'cond-mat.supr-con'
-            }
-        </code></pre>
-    </div>
-
-    <h3>Exploratory analysis</h3>
-    <p>
-        Having dealt with those issues, I tagged each of the papers with their relevant subjects.
-        Using matplotlib, I was able to plot the following distribution.
-    </p>
-    <img src="/static/images/arxiv_papers_by_subject.png">
-    <p>
-        It was clear that physics was the most popular subject, with more than half of the papers.
-        Econ, not so much; note that there were 1043 econ papers, not 0 like one might assume by looking at the graph.
-    </p>
+</div>
 
 
-    <h2>Mathematics papers</h2>
-    <p>
-        I decided that I wanted to restrict the dataset to mathematics papers.
-        This was a part of the data I am inherently more familiar with.
-        It also a large decrease in the amount of data to wrangle.
-    </p>
-
-
-
-
-
-
-
-
+<!--
     This is <code>inline code</code> example.
     <pre>&lt;p&gt;Sample block of code&lt;/p&gt;</pre>
-
-    
-
-</div>
-
-<div class="container mt-5">
-    <h2>Bootstrap Code Snippet Example</h2>
-    <pre class="bg-light p-4 border rounded"><code>
-        import pandas as pd
-        import requests
-        from bs4 import BeautifulSoup
-        
-        #import arxiv categories page url into BeautifulSoup
-        url = "https://arxiv.org/category_taxonomy"
-        page = requests.get(url)
-        soup = BeautifulSoup(page.content,'html.parser')
-        
-        #restrict to the categories table in the page
-        tax_list_tag = soup.find(id='category_taxonomy_list')
-        
-        #get list whose elements contain each of the main subject categories
-        cat_tax_list = tax_list_tag.find_all(attrs={'class':'accordion-body'})
-    </code></pre>
-</div>
-
-
-
-
+-->
 
 
 
