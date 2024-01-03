@@ -8,7 +8,6 @@ Data Science
 {% block header %}
 
 
-
 {% endblock %}
 
 
@@ -34,11 +33,10 @@ Data Science
         <div class="position-sticky rounded-3 border shadow" style="top: 5rem;">
             <div id="list-example" class="list-group list-group-flush rounded-3">
                 <a class="list-group-item list-group-item-action " href="#skills">Skills</a>
-                <a class="list-group-item list-group-item-action " href="#paper_recommender">Paper Recommender</a>
-                <a class="list-group-item list-group-item-action " href="#subject_identifier">Subject Identifier</a>
-                <a class="list-group-item list-group-item-action " href="#future_project">Future Project</a>
+                <a class="list-group-item list-group-item-action " href="#paper-recommender">Paper Recommender</a>
+                <a class="list-group-item list-group-item-action " href="#subject-identifier">Subject Identifier</a>
                 <a class="list-group-item list-group-item-action " href="#blog">ArXiv data blog</a>
-              </div>
+            </div>
         </div>
 
     </div>
@@ -46,21 +44,24 @@ Data Science
       <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
 
         <div class="container">
-            <h4 id="skills">Skills</h4>
+            <h2 id="skills">Skills</h2>
             <ul>
                 <li>Programming: Python, SQL</li>
-                <li>Machine Learning: pandas, scikit-learn</li>
+                <li>Data Science: pandas, scikit-learn</li>
                 <li>Data Visualization: Matplotlib, seaborn</li>
-                <li>Mathematical Computing: Mathematica</li>
                 <li>Web Development: Flask</li>
+                <li>Version Control: Git, GitHub</li>
+                <li>Virtual Containers: Docker</li>
+                <li>Web Services: Google Cloud Run</li>
+                <li>Mathematical Computing: Mathematica</li>
                 <li>Mathematical Typesetting: LaTeX</li>
-                <li>Version Control: Git</li>
             </ul>
+            <a href="/data-science/resume" type="button" class="btn btn-lg btn-primary">My resume</a>
         </div>
 
 
         <div class="container my-2 py-2">
-            <h4 id="paper_recommender">Paper Recommender</h4>
+            <h2 id="paper-recommender">Paper Recommender</h2>
             <p>I have created a recommendation engine for finding mathematical papers on <a href="https://arxiv.org/">arXiv.org</a>.</p>
     
             <p>
@@ -87,7 +88,7 @@ Data Science
         </div>
         
         <div class="container my-2 py-2">
-            <h4 id="subject_identifier">Subject Identifier</h4>
+            <h2 id="subject-identifier">Subject Identifier</h2>
             <p>I have created a classifier for finding identifying the subject of a mathematical paper.</p>
     
             <p>
@@ -101,11 +102,11 @@ Data Science
             
         </div>
 
-
         <div class="container my-2 py-2">
-            <h4 id="blog">ArXiv data blog</h4>
-            <p>Here is a <a href="/blog/arxiv">blog post</a> about my process working through the ArXiv metadata.</p>
+            <h2 id="blog">ArXiv data blog</h2>
+            <p>I have started a blog post about my process working through the ArXiv metadata.</p>
             
+            <a href="/blog/arxiv" type="button" class="btn btn-lg btn-primary">Blog post</a>
         </div>
 
         
