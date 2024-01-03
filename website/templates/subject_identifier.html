@@ -39,6 +39,7 @@ Subject Identifier
 This is a tool which identifies which mathematical subjects a given article is.
 Fill in the title and/or abstract fields below to match a paper of interest, then after submission,
 you will get a list of recommended subjects that paper belongs to.
+The insert sample buttons will fill the given field with those of my PhD thesis.
 (Note that it can take a up to a minute to start up the recommender service if it hasn't been used recently.)
 
 
@@ -48,11 +49,13 @@ you will get a list of recommended subjects that paper belongs to.
 <form method="POST">
     <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+        <input type="text" class="form-control" id="papertitle" name="title" placeholder="Title goes here">
+        <button type="button" class="btn btn-secondary" id="sample-title-button">Insert sample title</button>
       </div>
       <div class="mb-3">
         <label for="abstract" class="form-label">Abstract</label>
-        <textarea class="form-control" id="abstract" name="abstract" rows="3" placeholder="Abstract"></textarea>
+        <textarea class="form-control" id="paperabstract" name="abstract" rows="3" placeholder="Abstract goes here"></textarea>
+        <button type="button" class="btn btn-secondary" id="sample-abstract-button">Insert sample abstract</button>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
 </form>
@@ -66,5 +69,7 @@ you will get a list of recommended subjects that paper belongs to.
 
 {% block output %}
 {% endblock %}
+
+<script src="{{ url_for('static', filename='js/sample_buttons.js') }}"></script>
 
 {% endblock%}
