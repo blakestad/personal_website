@@ -6,23 +6,23 @@
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.cliffblakestad.com/math</loc>
+  <loc>https://cliffblakestad.com/math</loc>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.cliffblakestad.com/data-science</loc>
+  <loc>https://cliffblakestad.com/data-science</loc>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.cliffblakestad.com/projects/recommend</loc>
+  <loc>https://cliffblakestad.com/projects/recommend</loc>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://www.cliffblakestad.com/projects/subject-identifier</loc>
+  <loc>https://cliffblakestad.com/projects/subject-identifier</loc>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://www.cliffblakestad.com/blog/arxiv</loc>
+  <loc>https://cliffblakestad.com/blog/arxiv</loc>
   <priority>0.60</priority>
 </url>
 
