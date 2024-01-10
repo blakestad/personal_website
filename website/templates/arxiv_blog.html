@@ -81,19 +81,19 @@ ArXiv data
                     </p>
                     <div class="container mt-5">
                         <pre class="bg-light p-4 border rounded"><code>
-                            import requests
-                            from bs4 import BeautifulSoup
-                            
-                            #import arxiv categories page url into BeautifulSoup
-                            url = "https://arxiv.org/category_taxonomy"
-                            page = requests.get(url)
-                            soup = BeautifulSoup(page.content,'html.parser')
-                            
-                            #restrict to the categories table in the page
-                            tax_list_tag = soup.find(id='category_taxonomy_list')
-                            
-                            #get list whose elements contain each of the main subject categories
-                            cat_tax_list = tax_list_tag.find_all(attrs={'class':'accordion-body'})
+<!--                    -->import requests
+<!--                    -->from bs4 import BeautifulSoup
+<!--                    -->
+<!--                    -->#import arxiv categories page url into BeautifulSoup
+<!--                    -->url = "https://arxiv.org/category_taxonomy"
+<!--                    -->page = requests.get(url)
+<!--                    -->soup = BeautifulSoup(page.content,'html.parser')
+<!--                    -->
+<!--                    -->#restrict to the categories table in the page
+<!--                    -->tax_list_tag = soup.find(id='category_taxonomy_list')
+<!--                    -->
+<!--                    -->#get list whose elements contain each of the main subject categories
+<!--                    -->cat_tax_list = tax_list_tag.find_all(attrs={'class':'accordion-body'})
                         </code></pre>
                     </div>
                     <p>
@@ -105,26 +105,26 @@ ArXiv data
                     </p>
                     <div class="container mt-5">
                         <pre class="bg-light p-4 border rounded"><code>
-                            import pandas as pd
-
-                            #restrict to the computer science categories
-                            comp_sci_tag_list = cat_tax_list[0].find_all(attrs={'class':"columns divided"})
-                            
-                            #extract computer science categories into a list whose elements are dictionaries with the arxiv id, category name, and description
-                            tagged_comp_sci_list = []
-                            for entry in comp_sci_tag_list:
-                                row = {'arxiv_id':entry.find('h4').text,
-                                    'category_name':entry.find('span').text,
-                                    'description':entry.find("p").text}
-                                tagged_comp_sci_list.append(row)
-                            
-                            #compile the computer science categories into a DataFrame.
-                            comp_sci_categories = pd.DataFrame(tagged_comp_sci_list)
-
-                            #strip extra formatting out of computer science categories
-                            for index, row in comp_sci_categories.iterrows():
-                                comp_sci_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
-                                comp_sci_categories['category_name'][index] = row['category_name'].strip('()')
+<!--                    -->import pandas as pd
+<!--                    -->
+<!--                    -->#restrict to the computer science categories
+<!--                    -->comp_sci_tag_list = cat_tax_list[0].find_all(attrs={'class':"columns divided"})
+<!--                    -->
+<!--                    -->#extract computer science categories into a list whose elements are dictionaries with the arxiv id, category name, and description
+<!--                    -->tagged_comp_sci_list = []
+<!--                    -->for entry in comp_sci_tag_list:
+<!--                    -->    row = {'arxiv_id':entry.find('h4').text,
+<!--                    -->        'category_name':entry.find('span').text,
+<!--                    -->        'description':entry.find("p").text}
+<!--                    -->    tagged_comp_sci_list.append(row)
+<!--                    -->
+<!--                    -->#compile the computer science categories into a DataFrame.
+<!--                    -->comp_sci_categories = pd.DataFrame(tagged_comp_sci_list)
+<!--                    -->
+<!--                    -->#strip extra formatting out of computer science categories
+<!--                    -->for index, row in comp_sci_categories.iterrows():
+<!--                    -->    comp_sci_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
+<!--                    -->    comp_sci_categories['category_name'][index] = row['category_name'].strip('()')
                         </code></pre>
                     </div>
                     <p>
@@ -136,30 +136,30 @@ ArXiv data
                     </p>
                     <div class="container mt-5">
                         <pre class="bg-light p-4 border rounded"><code>
-                            #restrict to the physics categories
-                            phys_sup_tag_list = cat_tax_list[4].find_all(attrs={'class':"physics columns"})
-                            
-                            #extract physics categories into a list whose elements are dictionaries with the arxiv id, category name, and description
-                            tagged_phys_list = []
-                            for cat in phys_sup_tag_list: 
-                                phys_tag_list = cat.find_all(attrs={'class':"columns divided"})
-                                for entry in phys_tag_list:
-                                    row = {'super_category_name':cat.find('h3').text,
-                                        'super_category_id':cat.find('span').text,
-                                        'arxiv_id':entry.find('h4').text,
-                                        'category_name':entry.find('span').text,
-                                        'description':entry.find("p").text}
-                                    tagged_phys_list.append(row)
-                            
-                            #compile the physics categories into a DataFrame.
-                            phys_categories = pd.DataFrame(tagged_phys_list)
-
-                            #strip extra formatting out of physics categories
-                            for index, row in phys_categories.iterrows():
-                                phys_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
-                                phys_categories['category_name'][index] = row['category_name'].strip('()')
-                                phys_categories['super_category_name'][index] = row['super_category_name'].replace(row['super_category_id'],"").strip()
-                                phys_categories['super_category_id'][index] = row['super_category_id'].strip('()')
+<!--                    -->#restrict to the physics categories
+<!--                    -->phys_sup_tag_list = cat_tax_list[4].find_all(attrs={'class':"physics columns"})
+<!--                    -->
+<!--                    -->#extract physics categories into a list whose elements are dictionaries with the arxiv id, category name, and description
+<!--                    -->tagged_phys_list = []
+<!--                    -->for cat in phys_sup_tag_list: 
+<!--                    -->    phys_tag_list = cat.find_all(attrs={'class':"columns divided"})
+<!--                    -->    for entry in phys_tag_list:
+<!--                    -->        row = {'super_category_name':cat.find('h3').text,
+<!--                    -->            'super_category_id':cat.find('span').text,
+<!--                    -->            'arxiv_id':entry.find('h4').text,
+<!--                    -->            'category_name':entry.find('span').text,
+<!--                    -->            'description':entry.find("p").text}
+<!--                    -->        tagged_phys_list.append(row)
+<!--                    -->
+<!--                    -->#compile the physics categories into a DataFrame.
+<!--                    -->phys_categories = pd.DataFrame(tagged_phys_list)
+<!--                    -->
+<!--                    -->#strip extra formatting out of physics categories
+<!--                    -->for index, row in phys_categories.iterrows():
+<!--                    -->    phys_categories['arxiv_id'][index] = row['arxiv_id'].replace(row['category_name'],"").strip()
+<!--                    -->    phys_categories['category_name'][index] = row['category_name'].strip('()')
+<!--                    -->    phys_categories['super_category_name'][index] = row['super_category_name'].replace(row['super_category_id'],"").strip()
+<!--                    -->    phys_categories['super_category_id'][index] = row['super_category_id'].strip('()')
                         </code></pre>
                     </div>
                 </div>
@@ -185,36 +185,36 @@ ArXiv data
                     </p>
                     <div class="container mt-5">
                         <pre class="bg-light p-4 border rounded"><code>
-                            #Turn list of arxiv_id category codes to set of subjects
-                            def ParsedCatToSubject(catlist):
-                                SubjectList = [IdToSubject(cat) for cat in catlist]
-                                SubjectSet = set(SubjectList)
-                                return SubjectSet            
-
-                            #Output general subject given a category arxiv_id
-                            def IdToSubject(a_id):
-                                if a_id in comp_sci_categories.arxiv_id.unique():
-                                    return "Computer Science"
-                                elif a_id in econ_categories.arxiv_id.unique():
-                                    return "Economics"
-                                elif a_id in eess_categories.arxiv_id.unique():
-                                    return "Electrical Engineering and Systems Science"
-                                elif a_id in math_categories.arxiv_id.unique():
-                                    return "Mathematics"
-                                elif a_id in phys_categories.arxiv_id.unique():
-                                    return "Physics"
-                                elif a_id in phys_categories.super_category_id.unique():
-                                    return "Physics"
-                                elif a_id in qbio_categories.arxiv_id.unique():
-                                    return "Quantitative Biology"
-                                elif a_id in qfin_categories.arxiv_id.unique():
-                                    return "Quantitative Finance"
-                                elif a_id in stat_categories.arxiv_id.unique():
-                                    return "Statistics"
-                                elif a_id in extra_category_to_subject.keys():
-                                    return extra_category_to_subject[a_id]
-                                else:
-                                    return "unknown"
+<!--                    -->#Turn list of arxiv_id category codes to set of subjects
+<!--                    -->def ParsedCatToSubject(catlist):
+<!--                    -->    SubjectList = [IdToSubject(cat) for cat in catlist]
+<!--                    -->    SubjectSet = set(SubjectList)
+<!--                    -->    return SubjectSet            
+<!--                    -->
+<!--                    -->#Output general subject given a category arxiv_id
+<!--                    -->def IdToSubject(a_id):
+<!--                    -->    if a_id in comp_sci_categories.arxiv_id.unique():
+<!--                    -->        return "Computer Science"
+<!--                    -->    elif a_id in econ_categories.arxiv_id.unique():
+<!--                    -->        return "Economics"
+<!--                    -->    elif a_id in eess_categories.arxiv_id.unique():
+<!--                    -->        return "Electrical Engineering and Systems Science"
+<!--                    -->    elif a_id in math_categories.arxiv_id.unique():
+<!--                    -->        return "Mathematics"
+<!--                    -->    elif a_id in phys_categories.arxiv_id.unique():
+<!--                    -->        return "Physics"
+<!--                    -->    elif a_id in phys_categories.super_category_id.unique():
+<!--                    -->        return "Physics"
+<!--                    -->    elif a_id in qbio_categories.arxiv_id.unique():
+<!--                    -->        return "Quantitative Biology"
+<!--                    -->    elif a_id in qfin_categories.arxiv_id.unique():
+<!--                    -->        return "Quantitative Finance"
+<!--                    -->    elif a_id in stat_categories.arxiv_id.unique():
+<!--                    -->        return "Statistics"
+<!--                    -->    elif a_id in extra_category_to_subject.keys():
+<!--                    -->        return extra_category_to_subject[a_id]
+<!--                    -->    else:
+<!--                    -->        return "unknown"
                         </code></pre>
                     </div>
                     <p>
@@ -223,19 +223,19 @@ ArXiv data
                     </p>
                     <div class="container mt-5">
                         <pre class="bg-light p-4 border rounded"><code>
-                            #Turn string of arxiv_id categories into a list of arxiv_id category codes together with aliases
-                            def ParseCategories(stringlist):
-                            catlist = stringlist.split()
-                            for key, value in CATEGORY_ALIASES.items():
-                                if (key in catlist) and (not value in catlist):
-                                    catlist.append(value)
-                                elif (value in catlist) and (not key in catlist):
-                                    catlist.append(key)
-                            for key, value in EXTRA_ALIASES.items():
-                                if (key in catlist) and (not value in catlist):
-                                    catlist.append(value)
-                                    #catlist.remove(key)
-                            return catlist
+<!--                    -->#Turn string of arxiv_id categories into a list of arxiv_id category codes together with aliases
+<!--                    -->def ParseCategories(stringlist):
+<!--                    -->catlist = stringlist.split()
+<!--                    -->for key, value in CATEGORY_ALIASES.items():
+<!--                    -->    if (key in catlist) and (not value in catlist):
+<!--                    -->        catlist.append(value)
+<!--                    -->    elif (value in catlist) and (not key in catlist):
+<!--                    -->        catlist.append(key)
+<!--                    -->for key, value in EXTRA_ALIASES.items():
+<!--                    -->    if (key in catlist) and (not value in catlist):
+<!--                    -->        catlist.append(value)
+<!--                    -->        #catlist.remove(key)
+<!--                    -->return catlist
                         </code></pre>
                     </div>
                     <p>
@@ -250,28 +250,28 @@ ArXiv data
                     </p>
                     <div class="container mt-5">
                         <pre class="bg-light p-4 border rounded"><code>
-                            EXTRA_ALIASES = {
-                                'adap-org':'nlin.AO',
-                                'solve-int':'nlin.SI',
-                                'solv-int':'nlin.SI',
-                                'alg-geom':'math.AG',
-                                'chao-dyn':'nlin.CD',
-                                'funct-an':'math.FA',
-                                'dg-ga':'math.DG',
-                                'q-alg':'math.QA',
-                                'adap-org':'nlin.AO',
-                                'atom-ph':'physics.atom-ph',
-                                'chao-dyn':'nlin.CD',
-                                'chem-ph':'physics.chem-ph',
-                                'patt-sol':'nlin.PS',
-                                'comp-gas':'nlin.CG',
-                                'acc-phys':'physics.acc-ph',
-                                'ao-sci':'physics.ao-ph',
-                                'plasm-ph':'physics.plasm-ph',
-                                'mtrl-th':'cond-mat.mtrl-sci',
-                                'cmp-lg':'cs.CL',
-                                'supr-con':'cond-mat.supr-con'
-                            }
+<!--                    -->EXTRA_ALIASES = {
+<!--                    -->    'adap-org':'nlin.AO',
+<!--                    -->    'solve-int':'nlin.SI',
+<!--                    -->    'solv-int':'nlin.SI',
+<!--                    -->    'alg-geom':'math.AG',
+<!--                    -->    'chao-dyn':'nlin.CD',
+<!--                    -->    'funct-an':'math.FA',
+<!--                    -->    'dg-ga':'math.DG',
+<!--                    -->    'q-alg':'math.QA',
+<!--                    -->    'adap-org':'nlin.AO',
+<!--                    -->    'atom-ph':'physics.atom-ph',
+<!--                    -->    'chao-dyn':'nlin.CD',
+<!--                    -->    'chem-ph':'physics.chem-ph',
+<!--                    -->    'patt-sol':'nlin.PS',
+<!--                    -->    'comp-gas':'nlin.CG',
+<!--                    -->    'acc-phys':'physics.acc-ph',
+<!--                    -->    'ao-sci':'physics.ao-ph',
+<!--                    -->    'plasm-ph':'physics.plasm-ph',
+<!--                    -->    'mtrl-th':'cond-mat.mtrl-sci',
+<!--                    -->    'cmp-lg':'cs.CL',
+<!--                    -->    'supr-con':'cond-mat.supr-con'
+<!--                    -->}
                         </code></pre>
                     </div>
                 </div>
@@ -296,6 +296,88 @@ ArXiv data
                         This was a part of the data I am inherently more familiar with.
                         It also a large decrease in the amount of data to wrangle.
                     </p>
+                    <p>
+                        I produced a dataframe math_metadata by reading in the json file 10000 rows at a time and extracting those papers with math ids as dataframes to be concatinated together.
+                        I made sure to have all of the features correctly identified by datatype to reduce the filesize.
+                    </p>
+
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+<!--                    -->dtype_dict = {
+<!--                    -->    'id': 'string',
+<!--                    -->    'submitter': 'string',
+<!--                    -->    'authors':'string',
+<!--                    -->    'title':'string',
+<!--                    -->    'comments':'string',
+<!--                    -->    'journal-ref':'string',
+<!--                    -->    'doi':'string',
+<!--                    -->    'report-no':'string',
+<!--                    -->    'categories':'string',
+<!--                    -->    'license':'string',
+<!--                    -->    'abstract':'string',
+<!--                    -->    'versions':'object',
+<!--                    -->    'update_date':'datetime',
+<!--                    -->    'authors_parsed':'object'
+<!--                    -->}
+<!--                    -->
+<!--                    -->math_metadata = pd.DataFrame()
+<!--                    -->
+<!--                    -->with open('arxiv-metadata-oai-snapshot.json') as json_file:
+<!--                    -->    chunks = pd.read_json('arxiv-metadata-oai-snapshot.json',dtype=dtype_dict,lines=True,chunksize=10000)
+<!--                    -->    for chunk in chunks:
+<!--                    -->        chunk['categories_parsed'] = chunk['categories'].map(ParseCategories)
+<!--                    -->        chunk['subjects'] = chunk['categories_parsed'].map(ParsedCatToSubject)
+<!--                    -->        math_chunk = chunk[chunk['subjects'].map(lambda x: 'Mathematics' in x)]
+<!--                    -->        math_chunk['update_date'] = pd.to_datetime(math_chunk['update_date'],infer_datetime_format=True)
+<!--                    -->        math_metadata = pd.concat([math_metadata,math_chunk])
+                        </code></pre>
+                    </div>
+
+                    <p>
+                        With a basic dataframe together, I used the present features to explicitly add features for the creation date, numer of versions, and number of authors.
+                        I also ran the previously made functions to add the categorty names to each paper (while every paper was tagged as mathematics, some were also tagged as other categories, e.g. physics).
+                        More interesting, I added in the mathematical subjects from their arxiv codes (e.g. 'math.AG' became 'Algebraic Geometry').
+                    </p>                    
+
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+<!--                    -->#Process the math_metadata dataframe to produce useful features.
+<!--                    -->
+<!--                    -->#Extract creation date of first version, put into Datetime format
+<!--                    -->math_metadata['creation_date'] = pd.to_datetime(math_metadata['versions'].map(lambda x: x[0]['created']))
+<!--                    -->                            
+<!--                    -->#Extract total number of versions
+<!--                    -->math_metadata['version_number'] = math_metadata['versions'].map(lambda x: len(x)).astype(int)
+<!--                    -->                            
+<!--                    -->#Extract total number of authors
+<!--                    -->math_metadata['author_number'] = math_metadata['authors_parsed'].map(lambda x: len(x)).astype(int)
+<!--                    -->                            
+<!--                    -->#Parse categories field into a list of categories
+<!--                    -->math_metadata['categories_parsed'] = math_metadata['categories'].map(ParseCategories)
+<!--                    -->                            
+<!--                    -->#Take the parsed categories and deduce the subjects releveant for each paper
+<!--                    -->math_metadata['subjects'] = math_metadata'categories_parsed'].map(ParsedCatToSubject)
+<!--                    -->                            
+<!--                    -->#Add column of mathematical subjects from the list of arxiv_id category codes
+<!--                    -->math_metadata['math_subjects'] = math_metadata['categories_parsed'].map(CategoryToSubjectSet)
+                        </code></pre>
+                    </div>
+
+                    <p>
+                        Running all of this from the arxiv json file takes a while to run, so I saved the resulting dataframe for future use as a pickel file.
+                    </p>
+
+                    <div class="container mt-5">
+                        <pre class="bg-light p-4 border rounded"><code>
+<!--                    -->#Save math arxiv dataframe
+<!--                    -->math_metadata.to_pickle('math_metadata.pkl')
+                        </code></pre>
+                    </div>
+
+                    <p>
+                        
+                    </p>
+
                 </div>
             </div>
         </div>
