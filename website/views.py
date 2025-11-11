@@ -72,9 +72,9 @@ def resume():
 def math():
     return render_template('math.html')
 
-@views.route('/data-science')
-def data_science():
-    return render_template('datascience.html')
+@views.route('/software')
+def software():
+    return render_template('software.html')
 
 @views.route('/sitemap.xml')
 def sitemap():
