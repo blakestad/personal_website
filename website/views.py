@@ -64,7 +64,7 @@ def identify_subject():
 def arxiv_blog():
     return render_template('arxiv_blog.html')
 
-@views.route('/data-science/resume')
+@views.route('/software/resume')
 def resume():
     return send_file('static/pdfs/blakestad_resume_20240104.pdf', download_name='blakestad_resume.pdf')
 
