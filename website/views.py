@@ -66,7 +66,7 @@ def arxiv_blog():
 
 @views.route('/software/resume')
 def resume():
-    return send_file('static/pdfs/blakestad_resume_20240104.pdf', download_name='blakestad_resume.pdf')
+    return send_file('static/pdfs/blakestad_resume_20251112.pdf', download_name='blakestad_resume.pdf')
 
 @views.route('/math')
 def math():
